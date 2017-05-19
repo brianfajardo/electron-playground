@@ -7,11 +7,11 @@ app.on('ready', () => {
   console.log('Electron is ready!')
   mainWindow = new BrowserWindow()
   mainWindow.loadURL(`file://${__dirname}/main.html`)
-  // Closes mainWindow and all other windows of the app
-  mainWindow.on('closed', () => app.quit())
-
   const mainMenu = Menu.buildFromTemplate(menuTemplate)
   Menu.setApplicationMenu(mainMenu)
+
+  // Closes mainWindow and all other windows of the app
+  mainWindow.on('closed', () => app.quit())
 })
 
 ipcMain.on('todo:add', (e, todo) => {
@@ -26,8 +26,7 @@ function createAddTodoWindow() {
     width: 400,
     title: 'Add Todo'
   })
-  addTodoWindow.loadURL(`file://${__dirname}/addTodoWindow.html`)
-
+  addTodoWindow.loadURL(`file://${__dirname}/addTodo.html`)
   // Reduce memory usage. Optimize JS garbage collection
   addTodoWindow.on('close', () => { addTodoWindow = null })
 }
