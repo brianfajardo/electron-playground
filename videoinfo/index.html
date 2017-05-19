@@ -1,0 +1,34 @@
+<body>
+  <h1>Video Info</h1>
+  <form>
+    <div>
+      <label>Select a video</label>
+      <input type="file" accept="video/*" />
+    </div>
+    <button type="submit">Get info</button>
+  </form>
+  <h2 id="duration"></h2>
+
+  <!-- Small app, just keeping scripts in HTML -->
+  <script>
+    // Electron makes use of both Node and Chromium,
+    // therefore has access to all the goodies (ie. require)
+    // from within a browser window
+
+    // ipcRenderer is the bridge between the BrowserWindow (Electron)
+    // and the Electron app (Node)
+    const { ipcRenderer } = require('electron')
+
+    document.querySelector('form').addEventListener('submit', e => {
+      e.preventDefault()
+      const { path } = document.querySelector('input').files[0]
+      // Sending arbitray event name to app
+      ipcRenderer.send('video:submit', path)
+    })
+
+    ipcRenderer.on('video:duration', (e, duration) => {
+      const durationInMins = duration / 60
+      document.getElementById('duration').innerHTML = `Duration of video: ${durationInMins} minutes`
+    })
+  </script>
+</body>
