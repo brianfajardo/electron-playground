@@ -1,3 +1,20 @@
 <body>
-  <h1>electron todos</h1>
+  <h1>Electron Todos ✔️</h1>
+  <ul id="todoList"></ul>
+
+  <script>
+    const { ipcRenderer } = require('electron')
+    const todoList = document.getElementById('todoList')
+
+    ipcRenderer.on('todo:render', (e, todo) => {
+      const todoLi = document.createElement('li')
+      const todoText = document.createTextNode(todo)
+      todoLi.appendChild(todoText)
+      todoList.appendChild(todoLi)
+    })
+
+    ipcRenderer.on('todo:clearAll', e => {
+      todoList.innerHTML = ""
+    })
+  </script>
 </body>

@@ -8,10 +8,12 @@
   </form>
 
   <script>
-  document.querySelector('form').addEventListener('submit', (e) => {
-    e.preventDefault()
+    const { ipcRenderer } = require('electron')
 
-    debugger
-  })
+    document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault()
+      const { value } = document.querySelector('input')
+      ipcRenderer.send('todo:add', value)
+    })
   </script>
 </body>
