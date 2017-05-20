@@ -1,0 +1,11 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "semi": "off",
+    "linebreak-style": "off",
+    "eol-last": "off",
+    "no-trailing-spaces": "off",
+    "no-console": "off",
+    "comma-dangle": "off"
+  }
+}
