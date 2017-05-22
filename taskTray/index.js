@@ -1,5 +1,6 @@
-const { app, BrowserWindow, Tray } = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const CustomTray = require('./app/CustomTray')
 
 let mainWindow
 let tray
@@ -15,37 +16,25 @@ app.on('ready', () => {
   })
   mainWindow.loadURL(`file://${__dirname}/src/index.html`)
 
-
   // Tray
   const icon = process.platform === 'darwin' ? 'iconTray_mac.png' : 'iconTray_windows.png'
   const iconPath = path.join(__dirname, `./src/assets/${icon}`)
+  tray = new CustomTray(iconPath)
 
-
-  tray = new Tray(iconPath)
   tray.on('click', (e, bounds) => {
-    // CLick event bounds
-    const { x, y } = bounds
-    // Window height & width
+    const { x, y } = bounds // Click event bounds
     const { height, width } = mainWindow.getBounds()
+    const yPosition = process.platform === 'darwin' ? y : (y - height)
 
     if (mainWindow.isVisible()) {
       mainWindow.hide()
     } else {
-      const yPosition = process.platform === 'darwin' ? y : (y - height)
-      const boundsConfig = {
+      mainWindow.setBounds({
         x: Math.floor(x - (width / 2)),
         y: yPosition,
         height,
-        width,
-      }
-      console.log(boundsConfig)
-      mainWindow.setBounds(boundsConfig)
-      // mainWindow.setBounds({
-      //   x: x - (width / 2),
-      //   y: yPosition,
-      //   height,
-      //   width
-      // })
+        width
+      })
       mainWindow.show()
     }
   })
