@@ -3,6 +3,7 @@ const path = require('path')
 const CustomTray = require('./app/CustomTray')
 
 let mainWindow
+let tray
 
 app.on('ready', () => {
   // Main Window
@@ -18,5 +19,8 @@ app.on('ready', () => {
   // Tray
   const icon = process.platform === 'darwin' ? 'iconTray_mac.png' : 'iconTray_windows.png'
   const iconPath = path.join(__dirname, `./src/assets/${icon}`)
-  new CustomTray(iconPath, mainWindow)
+
+  // Prevent icon disappearing by assigning a variable
+  // and preventing garbage collection
+  tray = new CustomTray(iconPath, mainWindow)
 })
