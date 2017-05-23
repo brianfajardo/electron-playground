@@ -5,6 +5,7 @@ class CustomTray extends Tray {
   constructor(iconPath, mainWindow) {
     super(iconPath)
     this.mainWindow = mainWindow
+    this.setToolTip('Task Timer')
     this.on('click', this.onClick.bind(this))
   }
 
