@@ -26,3 +26,9 @@ const menuTemplate = [
   * `const menuWithTemplate = Menu.buildFromTemplate(menuTemplate)`
   * `Menu.setApplicationMenu(menuWithTemplate)`
 * Accelerator hotkeys can be used, but should accommodate for both Windows and macOS, or any other platform for x-compatibility
+
+### 🔧 Installation Guide:
+
+`npm install`
+
+`npm run electron`
