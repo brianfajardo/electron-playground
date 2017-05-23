@@ -15,6 +15,7 @@ app.on('ready', () => {
     show: false
   })
   mainWindow.loadURL(`file://${__dirname}/src/index.html`)
+  mainWindow.on('blur', () => mainWindow.hide())
 
   // Tray
   const icon = process.platform === 'darwin' ? 'iconTray_mac.png' : 'iconTray_windows.png'
