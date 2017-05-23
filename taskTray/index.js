@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, ipcMain } = require('electron')
 const MainWindow = require('./app/MainWindow.js')
 const CustomTray = require('./app/CustomTray')
 const path = require('path')
@@ -19,4 +19,9 @@ app.on('ready', () => {
   // Prevent icon disappearing by assigning a variable
   // and preventing garbage collection
   tray = new CustomTray(iconPath, mainWindow)
+})
+
+// macOS, tray display timer
+ipcMain.on('timer:update', (e, timeLeft) => {
+  tray.setTitle(timeLeft)
 })
