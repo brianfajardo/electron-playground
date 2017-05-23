@@ -1,21 +1,16 @@
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+const MainWindow = require('./app/MainWindow.js')
 const CustomTray = require('./app/CustomTray')
+const path = require('path')
 
 let mainWindow
 let tray
 
 app.on('ready', () => {
   // Main Window
-  mainWindow = new BrowserWindow({
-    height: 500,
-    width: 300,
-    frame: false,
-    resizable: false,
-    show: false
-  })
+  process.platform === 'darwin' ? app.dock.hide() : null
+  mainWindow = new MainWindow()
   mainWindow.loadURL(`file://${__dirname}/src/index.html`)
-  mainWindow.on('blur', () => mainWindow.hide())
 
   // Tray
   const icon = process.platform === 'darwin' ? 'iconTray_mac.png' : 'iconTray_windows.png'
